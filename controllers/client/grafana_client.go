@@ -142,6 +142,11 @@ func NewGeneratedGrafanaClient(ctx context.Context, c client.Client, grafana *v1
 
 	transport := NewInstrumentedRoundTripper(grafana.Name, metrics.GrafanaApiRequests, grafana.IsExternal(), tlsConfig)
 
+	var headers map[string]string
+	for _, h := range *grafana.Spec.Client.Headers {
+		headers[h.Key] = h.Value
+	}
+
 	client := &http.Client{
 		Transport: transport,
 		Timeout:   timeout * time.Second,
@@ -157,7 +162,7 @@ func NewGeneratedGrafanaClient(ctx context.Context, c client.Client, grafana *v1
 		NumRetries:  0,
 		Client:      client,
 		TLSConfig:   tlsConfig,
-		HTTPHeaders: grafana.Spec.Client.Headers,
+		HTTPHeaders: headers,
 	}
 	if credentials.username != "" {
 		cfg.BasicAuth = url.UserPassword(credentials.username, credentials.password)
