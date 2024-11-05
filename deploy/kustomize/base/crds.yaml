@@ -1882,6 +1882,20 @@ spec:
                 description: Client defines how the grafana-operator talks to the
                   grafana instance.
                 properties:
+                  headers:
+                    description: Optional list of Header configuration objects that
+                      specify headers key and their value.
+                    items:
+                      description: Header specifies http.Header key and value
+                      properties:
+                        key:
+                          description: Header name
+                          type: string
+                        value:
+                          description: Header value
+                          type: string
+                      type: object
+                    type: array
                   preferIngress:
                     description: If the operator should send it's request through
                       the grafana instances ingress object instead of through the

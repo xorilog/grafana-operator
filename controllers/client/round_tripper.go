@@ -38,6 +38,7 @@ func NewInstrumentedRoundTripper(relatedResource string, metric *prometheus.Coun
 
 func (in *instrumentedRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
 	r.Header.Add("user-agent", "grafana-operator/"+embeds.Version)
+
 	resp, err := in.wrapped.RoundTrip(r)
 	if resp != nil {
 		in.metric.WithLabelValues(

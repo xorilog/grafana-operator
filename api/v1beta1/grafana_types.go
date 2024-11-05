@@ -119,6 +119,17 @@ type GrafanaClient struct {
 	// TLS Configuration used to talk with the grafana instance.
 	// +optional
 	TLS *TLSConfig `json:"tls,omitempty"`
+	// Optional list of Header configuration objects that specify headers key and their value.
+	// +optional
+	Headers *[]Header `json:"headers,omitempty"`
+}
+
+// Header specifies http.Header key and value
+type Header struct {
+	// Header name
+	Key string `json:"key,omitempty"`
+	// Header value
+	Value string `json:"value,omitempty"`
 }
 
 // GrafanaPreferences holds Grafana preferences API settings
@@ -138,8 +149,8 @@ type GrafanaStatus struct {
 	Version     string                 `json:"version,omitempty"`
 }
 
-//+kubebuilder:object:root=true
-//+kubebuilder:subresource:status
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
 
 // Grafana is the Schema for the grafanas API
 // +kubebuilder:printcolumn:name="Version",type="string",JSONPath=".status.version",description=""
@@ -154,7 +165,7 @@ type Grafana struct {
 	Status            GrafanaStatus `json:"status,omitempty"`
 }
 
-//+kubebuilder:object:root=true
+// +kubebuilder:object:root=true
 
 // GrafanaList contains a list of Grafana
 type GrafanaList struct {
