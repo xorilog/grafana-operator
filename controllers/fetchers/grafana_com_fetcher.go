@@ -48,7 +48,7 @@ func getLatestGrafanaComRevision(dashboard *v1beta1.GrafanaDashboard, tlsConfig 
 		return -1, err
 	}
 
-	client := client2.NewInstrumentedRoundTripper(fmt.Sprintf("%v/%v", dashboard.Namespace, dashboard.Name), metrics.GrafanaComApiRevisionRequests, true, tlsConfig)
+	client := client2.NewInstrumentedRoundTripper(fmt.Sprintf("%v/%v", dashboard.Namespace, dashboard.Name), metrics.GrafanaComApiRevisionRequests, true, tlsConfig, nil)
 	response, err := client.RoundTrip(request)
 	if err != nil {
 		return -1, err

@@ -35,7 +35,7 @@ func FetchDashboardFromUrl(ctx context.Context, dashboard *v1beta1.GrafanaDashbo
 		return nil, err
 	}
 
-	client := client2.NewInstrumentedRoundTripper(fmt.Sprintf("%v/%v", dashboard.Namespace, dashboard.Name), metrics.DashboardUrlRequests, true, tlsConfig)
+	client := client2.NewInstrumentedRoundTripper(fmt.Sprintf("%v/%v", dashboard.Namespace, dashboard.Name), metrics.DashboardUrlRequests, true, tlsConfig, nil)
 	// basic auth is supported for dashboards from url
 	if dashboard.Spec.UrlAuthorization != nil && dashboard.Spec.UrlAuthorization.BasicAuth != nil {
 		username, err := grafanaClient.GetValueFromSecretKey(ctx, dashboard.Spec.UrlAuthorization.BasicAuth.Username, c, dashboard.Namespace)
